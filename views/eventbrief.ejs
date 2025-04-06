@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>Event Brief</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    .event-brief {
+      max-width: 900px;
+      margin: 60px auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .event-brief img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+    }
+
+    .event-content {
+      padding: 30px;
+    }
+
+    .event-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3f51b5;
+    }
+
+    .event-info {
+      margin: 20px 0;
+    }
+
+    .event-info strong {
+      color: #3f51b5;
+    }
+
+    .back-btn {
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #2c3e9f;
+    }
+  </style>
+</head>
+<body>
+  <%- include("./partials/navbar") %>
+
+  <div class="event-brief">
+    <% if (events.image) { %>
+      <img src="<%= events.image %>" alt="<%= events.eventName %>">
+    <% } %>
+
+    <div class="event-content">
+      <h1 class="event-title"><%= events.eventName %></h1>
+      <p class="event-info"><strong>Date:</strong> <%= new Date(events.date).toLocaleDateString() %></p>
+      <p class="event-info"><strong>Location:</strong> <%= events.location %></p>
+      <p class="event-info"><strong>Price:</strong> ₹<%= events.price %></p>
+      <p class="event-info"><strong>Seats:</strong> <%= events.totalSeat %></p>
+
+      <hr>
+      <p><%= events.description %></p>
+      <form action="/event/booking/<%= events._id %>" method="POST" class="mt-4 text-center">
+        <input type="hidden" name="date" value="<%= events.date %>">
+        <button type="submit" class="btn btn-primary px-4 py-2" style="background-color: #3f51b5; border: none; border-radius: 8px;">
+          🎟️ Book Now
+        </button>
+      </form>
+      
+      <a href="/event" class="back-btn mt-4">⬅ Back to Events</a>
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

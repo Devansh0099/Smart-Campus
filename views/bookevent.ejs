@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include("./partials/head") %>
+<body>
+  <%- include("./partials/navbar") %>
+
+  <div class="container py-5">
+    <h1 class="text-center mb-4 fw-bold">🎟️ My Booked Events</h1>
+
+    <% if (bookings.length === 0) { %>
+      <p class="text-center text-muted">You have not booked any events yet.</p>
+    <% } else { %>
+      <div class="row">
+        <% bookings.forEach(booking => { %>
+          <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+              <% if (booking.event.image) { %>
+                <img src="<%= booking.event.image %>" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Event Image">
+              <% } %>
+              <div class="card-body">
+                <h5 class="card-title"><%= booking.event.eventName %></h5>
+                <p class="card-text"><%= booking.event.description %></p>
+                <p class="card-text">
+                  📍 <strong>Location:</strong> <%= booking.event.location %><br>
+                  📅 <strong>Date:</strong> <%= new Date(booking.event.date).toLocaleDateString() %><br>
+                  💰 <strong>Price:</strong> ₹<%= booking.event.price %><br>
+                  ✅ <strong>Status:</strong> Booked
+                </p>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <div class="text-center mt-4">
+      <a href="/event" class="btn btn-outline-primary">⬅️ Back to Events</a>
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

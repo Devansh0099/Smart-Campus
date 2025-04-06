@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= item.productName %> | Smart Campus Assistant</title>
+  <%- include("./partials/head") %>
+</head>
+<body class="bg-light">
+  <%- include("./partials/navbar") %>
+
+  <div class="container py-5">
+    <div class="card shadow-lg mb-4">
+      <% if (item.productImage) { %>
+        <img src="<%= item.productImage %>" class="card-img-top" style="max-height: 400px; object-fit: cover;" alt="Item Image">
+      <% } %>
+
+      <div class="card-body">
+        <h2 class="card-title text-primary mb-3"><%= item.productName %></h2>
+
+        <span class="badge <%= item.category === 'lost' ? 'bg-danger' : 'bg-success' %> mb-3">
+          <%= item.category.toUpperCase() %>
+        </span>
+
+        <p class="card-text"><strong>Description:</strong> <%= item.description %></p>
+        <p class="card-text"><strong>Last Seen Location:</strong> <%= item.location %></p>
+        <p class="card-text"><strong>Contact:</strong> <%= item.mobileNumber %></p>
+        <p class="card-text text-muted"><strong>Date:</strong> <%= item.date ? item.date.toLocaleDateString() : 'N/A' %></p>
+
+        <a href="/lf" class="btn btn-outline-secondary mt-3">⬅️ Back to Lost & Found</a>
+      </div>
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

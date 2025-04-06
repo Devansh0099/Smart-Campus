@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title><%= assignment.title %> - Upload Assignment</title>
+
+  <style>
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1584697964190-efba9f30ec16?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 50px;
+    }
+
+    h2 {
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+    }
+
+    .btn-outline-secondary {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <%- include("partials/navbar") %>
+
+  <div class="container">
+    <h2><%= assignment.title %> - <%= assignment.subject %></h2>
+    <p><strong>Deadline:</strong> <%= new Date(assignment.deadline).toLocaleDateString() %></p>
+    <p><strong>Email:</strong> <%= assignment.email %></p>
+
+    <hr>
+    <h4>📤 Upload Your Assignment (PDF)</h4>
+    <form action="/assignment/upload/<%= assignment._id %>" method="POST" enctype="multipart/form-data">
+      <input type="date" name="date" required class="form-control mb-2" />
+      <input type="file" name="pdf" required class="form-control mb-2" accept=".pdf" />
+      <button class="btn btn-primary">Upload</button>
+    </form>
+
+    <div class="mt-4">
+      <a href="/assignment" class="btn btn-outline-secondary">⬅️ Back to Assignments</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>Admin Dashboard | Reported Issues</title>
+</head>
+<body class="bg-light">
+  <%- include("./partials/navbar") %>
+
+  <div class="container py-5">
+    <h1 class="text-center mb-4 fw-bold text-primary">🛠️ Admin Dashboard - Reported Issues</h1>
+
+    <% if (issues.length === 0) { %>
+      <p class="text-center text-muted">No issues reported yet.</p>
+    <% } else { %>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped shadow-sm bg-white">
+          <thead class="table-primary text-center">
+            <tr>
+              <th>Title</th>
+              <th>Location</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% issues.forEach(issue => { %>
+              <tr class="align-middle text-center">
+                <td><%= issue.title %></td>
+                <td><%= issue.location %></td>
+                <td><%= issue.category %></td>
+                <td>
+                  <span class="badge 
+                    <%= issue.status === 'pending' ? 'bg-warning text-dark' : 
+                        issue.status === 'in-progress' ? 'bg-info' : 'bg-success' %>">
+                    <%= issue.status %>
+                  </span>
+                </td>
+                <td><%= issue.email || 'Anonymous' %></td>
+                <td>
+                  <a href="/view/<%= issue._id %>" class="btn btn-sm btn-primary mb-1">🔍 View</a>
+                  <form action="/message/status/<%= issue._id %>" method="POST" class="d-inline">
+                    <select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
+                      <option disabled selected>Update</option>
+                      <option value="pending">Pending</option>
+                      <option value="in-progress">In Progress</option>
+                      <option value="resolved">Resolved</option>
+                    </select>
+                  </form>
+                  <form action="/message/delete/<%= issue._id %>" method="POST" class="d-inline">
+                    <button class="btn btn-sm btn-danger mt-1">🗑 Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+    <div class="text-center mt-4">
+      <a href="/" class="btn btn-outline-secondary">⬅ Back to Home</a>
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>
