@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include("./partials/head") %>
+  <title>Checkout</title>
+</head>
+<body>
+  <%- include("./partials/navbar") %>
+
+  <div class="container mt-5">
+    <h2 class="mb-4">Checkout</h2>
+
+    <% if (cart.length === 0) { %>
+      <div class="alert alert-warning">Your cart is empty.</div>
+    <% } else { %>
+      <div class="mb-4">
+        <h5>Items in Cart:</h5>
+        <ul class="list-group mb-3">
+          <% cart.forEach(item => { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <%= item.title %>
+              <span>₹<%= item.price %></span>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+
+      <form action="/cart/checkout" method="POST">
+        <div class="mb-3">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" class="form-control" name="name" id="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="mobile" class="form-label">Mobile Number</label>
+          <input type="number" class="form-control" name="mobile" id="mobile" required>
+        </div>
+        <div class="mb-3">
+            <label for="mobile" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="mobile" required>
+          </div>
+        <button type="submit" class="btn btn-success">Place Order</button>
+      </form>
+    <% } %>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

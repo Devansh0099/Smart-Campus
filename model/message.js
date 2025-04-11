@@ -27,7 +27,16 @@ const schema=new mongoose.Schema({
     status:{
         type:String,
         default:"pending"
-    }
+    },sentiment: {
+        type: String,  // "positive", "neutral", "negative"
+      },
+      sentimentConfidence: {
+        type: Number,
+        default: 0,
+      },
+      priority:{
+        type:String
+      }
 
 })
 

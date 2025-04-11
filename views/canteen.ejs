@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>Smart Canteen</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+    .backdrop {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      padding: 2rem;
+      border-radius: 1rem;
+    }
+    .order-status {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .pickup-code {
+      background-color: #007bff;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .nutrition-form {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .nutrition-form h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .nutrition-form input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .nutrition-form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2ecc71;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nutrition-form button:hover {
+      background-color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include("./partials/navbar") %>
+
+  <div class="container my-5">
+    <div class="backdrop shadow-lg">
+
+      <div class="mb-5">
+        <h1 class="fw-bold text-success mb-3">Welcome to Smart Canteen 🍱</h1>
+        <p class="text-muted">
+          The Smart Canteen system offers a modern, efficient, and user-friendly experience for all campus students and staff.
+        </p>
+        <p class="text-muted">
+          You can explore the daily updated menu, place food orders directly, and track real-time updates on your order status.
+        </p>
+        <p class="text-muted mb-4">
+          Say goodbye to long queues! Enjoy fast, hygienic, and smooth dining experiences right from your dashboard.
+        </p>
+        <a href="/menu" class="btn btn-success">View Today’s Menu 🍽️</a>
+      </div>
+
+      <hr>
+      
+      <div class="d-flex justify-content-center">
+        <form class="nutrition-form" action="/nutrition/get-nutrition" method="POST">
+          <h2>Nutrition Info</h2>
+          <input type="text" name="ingredients" placeholder="e.g. 1 cup rice, 2 eggs" required>
+          <input type="number" name="servings" placeholder="Servings" value="1" min="1">
+          <button type="submit">Get Nutrition Info</button>
+        </form>
+      </div>
+      <div class="order-status">
+        <h4 class="text-success mb-3">Your Order Status 📦</h4>
+
+        <% if (orders && orders.length > 0) { %>
+          <ul class="list-group">
+            <% orders.forEach(order => { %>
+              <li class="list-group-item d-flex justify-content-between align-items-start flex-column">
+                <div class="w-100 d-flex justify-content-between">
+                  <div>
+                    <div class="fw-bold"><%= order.menu?.name || "Item" %></div>
+                    <small class="text-muted">Status: <%= order.status %></small><br>
+                    <small class="text-muted">Tracking: <%= order.tracking %></small>
+                  </div>
+                  <% const formattedDate = new Date(order.updatedAt).toLocaleString('en-IN', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  }); %>
+                  
+                  <div class="mt-1">
+                    <span class="px-3 py-1 rounded-pill bg-success text-white small shadow-sm">
+                      <i class="bi bi-clock me-1"></i><%= formattedDate %>
+                    </span>
+                  </div>
+                  
+                </div>
+
+                <% if (order.uniqueCode) { %>
+                  <div class="mt-2">
+                    <span class="pickup-code">Pickup Code: <%= order.uniqueCode %></span>
+                  </div>
+                <% } %>
+                <% if (order.tracking === "completed") { %>
+                  <form action="/cart/rateorder/<%= order._id %>" method="POST" class="mt-2">
+                    <label for="rating">Rate this order:</label>
+                    <select name="rating" class="form-select form-select-sm w-auto d-inline mx-2">
+                      <option value="1">⭐</option>
+                      <option value="2">⭐⭐</option>
+                      <option value="3">⭐⭐⭐</option>
+                      <option value="4">⭐⭐⭐⭐</option>
+                      <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary">Submit</button>
+                  </form>
+                <% } %>
+                
+              </li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p class="text-muted">No orders found yet. Place an order to see it here.</p>
+        <% } %>
+      </div>
+
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

@@ -1,14 +1,174 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%- include("./partials/head") %>
-    <title>Document</title>
+    <title>Smart Campus Assistant</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://images.unsplash.com/photo-1709949908067-2f77a542ffcd?w=1200') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #00ffcc;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 60px 30px;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 600px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .card img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background-color: #00cc99;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #009977;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navbar -->
     <%- include("./partials/navbar") %>
-    Home page
+
+    <!-- Cards Section -->
+    <div class="main-container">
+        <% const slides = [
+            {
+                title: "Welcome to the Smart Campus Assistant",
+                desc: "This platform helps students and staff with various tasks around campus. From reporting issues to ordering food at the canteen, we make your campus life more efficient.",
+                img: "https://images.unsplash.com/photo-1603573355706-3f15d98cf100?w=800",
+                link: "/issuereport",
+                btn: "Report an Issue"
+            },
+            {
+                title: "Lost and Found",
+                desc: "Have you lost something on campus? Or found an item that belongs to someone else? Use the Lost and Found feature to report or claim items.",
+                img: "https://plus.unsplash.com/premium_photo-1683121460212-bf0a455ec8b9?q=80",
+                link: "/lostandfound",
+                btn: "View Lost & Found"
+            },
+            {
+                title: "Smart Canteen Ordering",
+                desc: "Order your food in advance from the campus canteen, so you don’t have to wait in line! Check out the menu and place your order online.",
+                img: "https://images.unsplash.com/photo-1671049937852-c22b2396d5fe?w=800",
+                link: "/canteen",
+                btn: "Order Now"
+            },
+            {
+                title: "Event Management",
+                desc: "Stay updated on upcoming campus events. Register for events, view details, and much more with our Event Management system.",
+                img: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800",
+                link: "/events",
+                btn: "Explore Events"
+            },
+            {
+                title: "Assignment Submission",
+                desc: "Submit your assignments easily with our online assignment submission platform. You can also view your previous submissions here.",
+                img: "https://plus.unsplash.com/premium_photo-1669904022334-e40da006a0a3?q=80",
+                link: "/assignments",
+                btn: "Submit Assignment"
+            },
+            {
+                title: "Report an Issue",
+                desc: "Encountered an issue on campus? Report it through our easy-to-use reporting system. Get it addressed as soon as possible.",
+                img: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800",
+                link: "/issuereport",
+                btn: "Report Now"
+            }
+        ]; %>
+
+        <% slides.forEach(slide => { %>
+            <div class="card">
+                <h2><%= slide.title %></h2>
+                <p><%= slide.desc %></p>
+                <img src="<%= slide.img %>" alt="<%= slide.title %>">
+                <a href="<%= slide.link %>" class="btn"><%= slide.btn %></a>
+            </div>
+        <% }); %>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Smart Campus Assistant | All Rights Reserved</p>
+    </footer>
+
     <%- include("./partials/script") %>
 </body>
-</html>

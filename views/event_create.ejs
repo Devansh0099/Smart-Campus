@@ -1,0 +1,35 @@
+<h2>Create Event</h2>
+
+<!-- Auto-fill Form -->
+<form action="/event/autofill" method="POST" enctype="multipart/form-data">
+  <input type="file" name="image" required>
+  <button type="submit">Auto-fill from File</button>
+</form>
+
+<hr>
+
+<!-- Final Event Form -->
+<form action="/event/create" method="POST" enctype="multipart/form-data">
+  <label>Event Name:</label>
+  <input type="text" name="eventName" value="<%= autofillData ? autofillData.eventName : '' %>" required><br>
+
+  <label>Description:</label>
+  <textarea name="description" required><%= autofillData ? autofillData.description : '' %></textarea><br>
+
+  <label>Date:</label>
+  <input type="date" name="date" value="<%= autofillData ? autofillData.date : '' %>" required><br>
+
+  <label>Location:</label>
+  <input type="text" name="location" value="<%= autofillData ? autofillData.location : '' %>" required><br>
+
+  <label>Price:</label>
+  <input type="number" name="price" value="<%= autofillData ? autofillData.price : '' %>" required><br>
+
+  <label>Total Seats:</label>
+  <input type="number" name="totalSeat" value="<%= autofillData ? autofillData.totalSeat : '' %>" required><br>
+
+  <label>Upload Banner Image:</label>
+  <input type="file" name="image" required><br>
+
+  <button type="submit">Create Event</button>
+</form>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include("./partials/head") %>
+  <title>Smart Canteen Menu</title>
+
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1551218808-94e220e084d2'); /* You can replace this with your own image URL or local path */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+      margin-top: 50px;
+    }
+
+    .card {
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .btn-sm {
+      margin-right: 5px;
+    }
+
+    .show-cart-btn {
+      display: block;
+      width: 100%;
+    }
+    .nutrition-form {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .nutrition-form h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .nutrition-form input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .nutrition-form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2ecc71;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nutrition-form button:hover {
+      background-color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <%- include("./partials/navbar") %>
+
+  <div class="container menu-container mb-5">
+    <h2 class="text-center mb-4">Smart Canteen Menu</h2>
+
+    <div class="text-center mb-3">
+      <a href="/menu/create" class="btn btn-primary">Add New Item</a>
+    </div>
+
+    
+    <div class="row ">
+      <% menu.forEach(item => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow">
+            <img src="<%= item.image %>" class="card-img-top" style="height: 200px; object-fit: cover;" alt="<%= item.name %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= item.name %></h5>
+              <p class="card-text"><%= item.description %></p>
+              <p><strong>₹<%= item.price %></strong></p>
+              <p><span class="badge bg-secondary"><%= item.category %></span></p>
+              <p>Status: <%= item.available ? "Available ✅" : "Unavailable ❌" %></p>
+
+              <form action="/menu/available/<%= item._id %>" method="POST" class="mb-2">
+                <select name="available" onchange="this.form.submit()" class="form-select">
+                  <option value="true" <%= item.available ? "selected" : "" %>>Available</option>
+                  <option value="false" <%= !item.available ? "selected" : "" %>>Unavailable</option>
+                </select>
+              </form>
+
+              <form action="/menu/delete/<%= item._id %>" method="POST">
+                <button class="btn btn-danger btn-sm mb-1">Delete</button>
+              </form>
+
+              <form action="/cart" method="POST">
+                <input type="hidden" name="id" value="<%= item._id %>">
+                <button class="btn btn-success btn-sm mt-1">Add To Cart</button>
+              </form>
+
+              <a href="/cart/cart" class="btn btn-primary mt-3 show-cart-btn">Show Cart</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

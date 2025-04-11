@@ -25,7 +25,8 @@
         <p class="card-text"><strong>Last Seen Location:</strong> <%= item.location %></p>
         <p class="card-text"><strong>Contact:</strong> <%= item.mobileNumber %></p>
         <p class="card-text text-muted"><strong>Date:</strong> <%= item.date ? item.date.toLocaleDateString() : 'N/A' %></p>
-
+        <p><strong>Sentiment:</strong> <%= item.sentiment || 'Not Analyzed' %></p>
+        <p><strong>Confidence:</strong> <%= item.confidence || 'Not Available' %></p>
         <a href="/lf" class="btn btn-outline-secondary mt-3">⬅️ Back to Lost & Found</a>
       </div>
     </div>

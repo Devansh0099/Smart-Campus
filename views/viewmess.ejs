@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>View Reported Issue</title>
+</head>
+<body class="bg-light">
+  <%- include("./partials/navbar") %>
+
+  <div class="container py-5">
+    <h2 class="text-center mb-4 text-primary">📄 Issue Details</h2>
+
+    <div class="card shadow p-4">
+      <h4><strong>Title:</strong> <%= issue.title %></h4>
+      <p><strong>Location:</strong> <%= issue.location %></p>
+      <p><strong>Category:</strong> <%= issue.category %></p>
+      <p><strong>Description:</strong> <%= issue.content %></p>
+      <p><strong>Email:</strong> <%= issue.email %></p>
+
+      <% if (issue.image) { %>
+        <div class="mt-4">
+          <img src="/uploads/<%= issue.image %>" class="img-fluid rounded" alt="Issue Image">
+        </div>
+      <% } %>
+
+      <p><strong>Status:</strong> <%= issue.status %></p>
+      <p><strong>Sentiment:</strong> <%= issue.sentiment %></p>
+      <p><strong>Priority:</strong> <%= issue.priority %></p>
+
+      <div class="text-center mt-3">
+        <a href="/message/user" class="btn btn-outline-primary">🔙 Back to My Issues</a>
+      </div>
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

@@ -56,14 +56,17 @@
       </div>
 
       <hr>
-      <h3>➕ Add New Assignment</h3>
-      <form action="/assignment/add" method="POST" class="mb-4">
-        <input name="subject" required placeholder="Subject" class="form-control mb-2" />
-        <input name="title" required placeholder="Title" class="form-control mb-2" />
-        <input name="email" required placeholder="Email" class="form-control mb-2" />
-        <input type="date" name="deadline" required class="form-control mb-2" />
-        <button class="btn btn-success">Add Assignment</button>
-      </form>
+      <% if (user && (user.role === 'admin' || user.role === 'teacher')) { %>
+        <h3>➕ Add New Assignment</h3>
+        <form action="/assignment/add" method="POST" class="mb-4">
+          <input name="subject" required placeholder="Subject" class="form-control mb-2" />
+          <input name="title" required placeholder="Title" class="form-control mb-2" />
+          <input name="email" required placeholder="Email" class="form-control mb-2" />
+          <input type="date" name="deadline" required class="form-control mb-2" />
+          <button class="btn btn-success">Add Assignment</button>
+        </form>
+      <% } %>
+      
 
       <hr>
       <h3>📤 Your Submissions</h3>

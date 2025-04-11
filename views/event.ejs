@@ -163,7 +163,7 @@
       </div>
     <% } %>
 
-    <% if (user && user.role === 'admin' || user && user.role === 'student') { %>
+    <% if (user && user.role === 'admin')  { %>
       <hr class="my-5">
       <h3 class="text-center mb-4">➕ Add New Event</h3>
       <div class="card p-4 shadow-sm bg-white">
@@ -209,11 +209,14 @@
       </div>
     <% } %>
 
+
     <div class="text-center mt-5">
       <a href="/" class="btn btn-outline-primary">⬅️ Back to Home</a>
     </div>
   </div>
 
   <%- include("./partials/script") %>
+ 
+  
 </body>
 </html>

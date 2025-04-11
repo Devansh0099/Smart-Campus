@@ -12,18 +12,33 @@
         <li class="nav-item">
           <a class="nav-link" href="/assignment">Assignments</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/message">Report Issue</a>
-        </li>
+        </li> -->
+        <% if (locals.user && locals.user.role==='admin') { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/message/show">Report Issue</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/message">Report Issue</a>
+          </li>
+        <% } %>
         <li class="nav-item">
-          <a class="nav-link" href="/canteen">Smart Canteen</a>
+          <a class="nav-link" href="/menu/canteen">Smart Canteen</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/event">Events</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/chatbot">Chatbot</a>
+          <a class="nav-link" href="/chat/chatbot">Chatbot</a>
         </li>
+        <% if (locals.user ) { %> 
+          <li class="nav-item">
+            <a class="nav-link" href="/cart/admin/order">Admin Orders</a>
+          </li>
+        <% } %>
+
         <% if (locals.user) { %>
           <li class="nav-item">
             <a class="nav-link" href="/profile"><%= user.name %></a>

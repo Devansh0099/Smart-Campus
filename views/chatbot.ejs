@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>Campus Chatbot</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('https://images.unsplash.com/photo-1605379399642-870262d3d051'); /* Replace if needed */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #chatbox {
+      width: 450px;
+      margin: 80px auto;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    #chat-messages {
+      height: 360px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background-color: #f1f1f1;
+      margin-bottom: 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    #chat-messages div {
+      margin-bottom: 10px;
+    }
+
+    #chat-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #chat-form button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #chat-form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <%- include("./partials/navbar") %>
+
+  <div id="chatbox">
+    <h2>💬 Campus Chatbot</h2>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="Ask something..." required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("user-input");
+    const messages = document.getElementById("chat-messages");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      messages.innerHTML += `<div><strong>You:</strong> ${userText}</div>`;
+      input.value = "";
+
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userText })
+      });
+
+      const data = await res.json();
+      messages.innerHTML += `<div><strong>Bot:</strong> ${data.reply}</div>`;
+      messages.scrollTop = messages.scrollHeight;
+    });
+  </script>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

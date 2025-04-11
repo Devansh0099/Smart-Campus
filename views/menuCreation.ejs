@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include("./partials/head") %>
+  <title>Add Menu Item</title>
+
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092'); /* Replace with your own if needed */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: 60px auto;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: #343a40;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    .btn-success {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <%- include("./partials/navbar") %>
+
+  <div class="container">
+    <div class="form-container">
+      <h2 class="mb-4 text-center">🍔 Add New Menu Item</h2>
+
+      <form action="/menu/create" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label>Description</label>
+          <textarea name="description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Price (₹)</label>
+          <input type="number" name="price" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label>Category</label>
+          <select name="category" class="form-select">
+            <option>Snacks</option>
+            <option>Beverages</option>
+            <option>Meals</option>
+            <option>Desserts</option>
+            <option>Others</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Availability</label>
+          <select name="available" class="form-select">
+            <option value="true">Available</option>
+            <option value="false">Unavailable</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Image</label>
+          <input type="file" name="image" class="form-control" accept="image/*" required />
+        </div>
+
+        <div class="mb-3">
+          <label>Date</label>
+          <input type="date" name="date" class="form-control" required />
+        </div>
+
+        <button class="btn btn-success">Add Item</button>
+      </form>
+    </div>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

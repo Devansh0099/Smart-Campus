@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+  <title>Admin Order Management</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    .backdrop {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    .table td, .table th {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .badge {
+      font-size: 0.9rem;
+      padding: 0.5em 0.75em;
+    }
+
+    .table th {
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include('./partials/navbar') %>
+
+  <div class="container">
+    <div class="backdrop">
+      <h2 class="mb-4 text-center text-success fw-bold">Admin Order Dashboard 🧾</h2>
+
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle table-hover">
+          <thead class="table-dark text-center">
+            <tr>
+              <th style="width: 120px;">Order ID</th>
+              <th style="width: 100px;">User</th>
+              <th style="width: 100px;">Menu</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Status</th>
+              <th>Tracking</th>
+              <th>Pickup Code</th>
+              <th>Update Status</th>
+              <th>Update Tracking</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <% orders.forEach(order => { %>
+              <tr>
+                <td style="word-break: break-word;"><%= order._id %></td>
+                <td style="word-break: break-word;">
+                  <%= order.user ? order.user.name : order.name %>
+                </td>
+                <td style="word-break: break-word;">
+                  <%= order.menu && order.menu.name ? order.menu.name : order.menu._id %>
+                </td>
+                <td><%= order.name %></td>
+                <td><%= order.mobile %></td>
+
+                <td>
+                  <% if (order.status === "pending") { %>
+                    <span class="badge bg-warning">Pending</span>
+                  <% } else if (order.status === "accepted") { %>
+                    <span class="badge bg-success">Accepted</span>
+                  <% } else { %>
+                    <span class="badge bg-danger">Rejected</span>
+                  <% } %>
+                </td>
+
+                <td>
+                  <% if (order.tracking === "processing") { %>
+                    <span class="badge bg-info">Processing</span>
+                  <% } else { %>
+                    <span class="badge bg-success">Completed</span>
+                  <% } %>
+                </td>
+
+                <td>
+                  <% if (order.tracking === "completed" && order.uniqueCode) { %>
+                    <span class="badge bg-primary"><%= order.uniqueCode %></span>
+                  <% } else { %>
+                    <span class="text-muted">Not Generated</span>
+                  <% } %>
+                </td>
+
+                <td>
+                  <form action="/cart/update/status/<%= order._id %>" method="POST" class="d-flex">
+                    <select name="status" class="form-select form-select-sm me-2" required>
+                      <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                      <option value="reject" <%= order.status === 'reject' ? 'selected' : '' %>>Rejected</option>
+                      <option value="accepted" <%= order.status === 'accepted' ? 'selected' : '' %>>Accepted</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                  </form>
+                </td>
+
+                <td>
+                  <form action="/cart/update/tracking/<%= order._id %>" method="POST" class="d-flex">
+                    <select name="tracking" class="form-select form-select-sm me-2" required>
+                      <option value="processing" <%= order.tracking === 'processing' ? 'selected' : '' %>>Processing</option>
+                      <option value="completed" <%= order.tracking === 'completed' ? 'selected' : '' %>>Completed</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-success">Update</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/script') %>
+</body>
+</html>

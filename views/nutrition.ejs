@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include("./partials/head") %>
+  <title>Nutrition Info</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+
+    pre {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-left: 6px solid #2ecc71;
+      border-radius: 10px;
+      font-size: 16px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <%- include("./partials/navbar") %>
+
+  <div class="container">
+    <h2>Nutrition Info for <%= ingredients %> 🥗</h2>
+
+    <%
+      const nutrients = nutritionData.nutrients;
+
+      function getNutrient(name) {
+        const item = nutrients.find(n => n.name.toLowerCase() === name.toLowerCase());
+        return item ? `${item.amount} ${item.unit}` : "N/A";
+      }
+
+      const selectedNutrition = {
+        Calories: getNutrient("Calories"),
+        Fat: getNutrient("Fat"),
+        "Saturated Fat": getNutrient("Saturated Fat"),
+        Cholesterol: getNutrient("Cholesterol"),
+        Sodium: getNutrient("Sodium"),
+        "Vitamin A": getNutrient("Vitamin A"),
+        Protein: getNutrient("Protein")
+      };
+    %>
+
+    <h2>Selected Nutrition Info</h2>
+    <pre><%= JSON.stringify(selectedNutrition, null, 2) %></pre>
+  </div>
+
+  <%- include("./partials/script") %>
+</body>
+</html>

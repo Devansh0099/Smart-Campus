@@ -10,7 +10,8 @@ const schema=new mongoose.Schema({
     },
     location:{
         type:String,
-    },
+    },sentiment: String,
+    confidence: String,
     category:{
         type:String,
         enum:["lost","found"]

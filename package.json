@@ -9,13 +9,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "form-data": "^4.0.2",
+    "formdata": "^0.10.4",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.1",
-    "nodemon": "^3.1.9"
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9",
+    "openai": "^4.91.1"
   }
 }
